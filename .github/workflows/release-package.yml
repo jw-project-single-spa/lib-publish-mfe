@@ -1,8 +1,6 @@
 name: Node.js Package
 
-on:
-  workflow_dispatch:
-    types: [created]
+on: [push, workflow_dispatch]
 
 jobs:
   build:
