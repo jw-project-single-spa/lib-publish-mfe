@@ -1,5 +1,5 @@
 {
-  "name": "@jw/publish-mfe",
+  "name": "@jw-project/publish-mfe",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
     "prepublish": "npm run build"
   },
   "publishConfig": {
-    "@jw:registry": "https://npm.pkg.github.com"
+    "@jw-project:registry": "https://npm.pkg.github.com"
   },
   "author": "",
   "license": "ISC",
