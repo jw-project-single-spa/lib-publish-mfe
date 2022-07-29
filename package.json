@@ -1,13 +1,20 @@
 {
-  "name": "publish-mfe",
+  "name": "@jw/publish-mfe",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "bin": {
     "publish-mfe": "bin/index.js"
   },
+  "files": [
+    "bin/*.js"
+  ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "publishConfig": {
+    "@jw:registry": "https://npm.pkg.github.com"
   },
   "author": "",
   "license": "ISC",
