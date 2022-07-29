@@ -1,10 +1,10 @@
 {
-  "name": "@jw-project/publish-mfe",
+  "name": "@jw-project/lib-publish-mfe",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "bin": {
-    "publish-mfe": "bin/index.js"
+    "lib-publish-mfe": "bin/index.js"
   },
   "files": [
     "bin/*.js"
