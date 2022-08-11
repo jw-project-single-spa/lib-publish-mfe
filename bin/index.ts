@@ -5,9 +5,18 @@ import fs from "fs";
 import axios from "axios";
 
 async function run() {
-  const { fileName, fileAddress, mfeName, supabaseAuth } = await yargs(
-    process.argv
-  ).options({
+  const {
+    activeWhen,
+    exact,
+    isParcel,
+    fileName,
+    fileAddress,
+    mfeName,
+    supabaseAuth,
+  } = await yargs(process.argv).options({
+    activeWhen: { type: "string" },
+    exact: { type: "boolean" },
+    isParcel: { type: "boolean" },
     fileName: { type: "string" },
     fileAddress: { type: "string" },
     mfeName: { type: "string" },
@@ -40,6 +49,9 @@ async function run() {
     await axios.post("https://jw-service-list-mfe.herokuapp.com/", {
       name: mfeName,
       url: `${url}/storage/v1/object/public/${data?.Key}`,
+      activeWhen,
+      exact,
+      isParcel,
     });
   } catch (e) {
     console.error(e);
