@@ -4,6 +4,11 @@ import { createClient } from "@supabase/supabase-js";
 import fs from "fs";
 import axios from "axios";
 
+function error(e: unknown) {
+  console.error(e);
+  process.exit(1);
+}
+
 async function run() {
   const {
     activeWhen,
@@ -24,8 +29,7 @@ async function run() {
   }).argv;
 
   if (!fileName || !fileAddress || !mfeName || !supabaseAuth) {
-    console.error("faltam pametros");
-    process.exit(1);
+    return error("faltam pametros");
   }
 
   const url = "https://ufuubufsowyauanuzbii.supabase.co";
@@ -34,28 +38,28 @@ async function run() {
 
   await supabase.storage.from("bundle").remove([fileName]);
 
-  const { data, error } = await supabase.storage
+  const { data, error: errorStorage } = await supabase.storage
     .from("bundle")
     .upload(fileName, await fs.promises.readFile(fileAddress));
-  console.log(data, error);
-
-  if (error) {
-    console.error(error);
-    process.exit(1);
+  console.log(data, errorStorage);
+  if (errorStorage) {
+    return error(errorStorage);
   }
   console.log("upload to supabase: ", data);
 
-  try {
-    await axios.post("https://jw-service-list-mfe.herokuapp.com/", {
+  const { error: errorUpsert } = await supabase.from("mfe").upsert(
+    {
       name: mfeName,
       url: `${url}/storage/v1/object/public/${data?.Key}`,
       activeWhen,
       exact,
       isParcel,
-    });
-  } catch (e) {
-    console.error(e);
-    process.exit(1);
+    },
+    { onConflict: "name" }
+  );
+
+  if (errorUpsert) {
+    return error(errorUpsert);
   }
 }
 
