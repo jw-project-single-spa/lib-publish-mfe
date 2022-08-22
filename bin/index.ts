@@ -34,10 +34,8 @@ async function run() {
 
   // -----
   // auth
-  var serviceAccount = require("../auth.json");
-
   initializeApp({
-    credential: cert(serviceAccount),
+    credential: cert(firebaseAuth),
     databaseURL: "https://jw-project-58cb8-default-rtdb.firebaseio.com",
     storageBucket: "gs://jw-project-58cb8.appspot.com",
   });
