@@ -19,9 +19,9 @@ async function run() {
     mfeName,
     firebaseAuth,
   } = await yargs(process.argv).options({
-    activeWhen: { type: "string" },
-    exact: { type: "boolean" },
-    isParcel: { type: "boolean" },
+    activeWhen: { type: "string", default: "/" },
+    exact: { type: "boolean", default: false },
+    isParcel: { type: "boolean", default: false },
     fileName: { type: "string" },
     fileAddress: { type: "string" },
     mfeName: { type: "string" },
@@ -29,7 +29,7 @@ async function run() {
   }).argv;
 
   if (!fileName || !fileAddress || !mfeName || !firebaseAuth) {
-    return error("faltam pametros");
+    return error("Faltam parâmetros");
   }
 
   // -----
