@@ -34,8 +34,10 @@ async function run() {
 
   // -----
   // auth
+  let buff = Buffer.from(firebaseAuth, "base64");
+  let text = buff.toString("ascii");
   initializeApp({
-    credential: cert(firebaseAuth),
+    credential: cert(JSON.parse(text)),
     databaseURL: "https://jw-project-58cb8-default-rtdb.firebaseio.com",
     storageBucket: "gs://jw-project-58cb8.appspot.com",
   });
@@ -52,7 +54,7 @@ async function run() {
     action: "read",
     expires: "2100-01-01",
   });
-  console.info("upload do bundle em:", url);
+  console.info("Upload do bundle em:", url);
 
   // -----
   // register mfe on db
@@ -77,7 +79,7 @@ async function run() {
       // se não - cria novo
       save = await db.doc().set(body);
     }
-    console.info("MFE registrado");
+    console.info("---\nMFE registrado");
   } catch (errorDB) {
     error(errorDB);
   }
