@@ -6,7 +6,17 @@ export async function generateFirebaseJson() {
       target: "static",
       public: "bundle",
       ignore: ["firebase.json", "**/.*", "**/node_modules/**"],
-      rewrites: [{ source: "**" }],
+      headers: [
+        {
+          source: "**/*.@(js|json)",
+          headers: [
+            {
+              key: "Access-Control-Allow-Origin",
+              value: "*",
+            },
+          ],
+        },
+      ],
     },
   };
 

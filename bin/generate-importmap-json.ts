@@ -35,11 +35,13 @@ export async function generateImportmapJson() {
   console.log("JSON systemjs is saved");
 
   // create application file
-  const application = data.docs.map((mfe) => ({
-    ...mfe.data(),
-    name: `@jw-project/${mfe.data().name}`,
-    url: `${baseUrl}${mfe.data().url}?${mfe.data().hash}`,
-  }));
+  const application = data.docs
+    .filter((mfe) => !mfe.data().isParcel)
+    .map((mfe) => ({
+      ...mfe.data(),
+      name: `@jw-project/${mfe.data().name}`,
+      url: `${baseUrl}${mfe.data().url}?${mfe.data().hash}`,
+    }));
 
   fs.writeFileSync("bundle/application.json", JSON.stringify(application));
   console.log("JSON application is saved");
