@@ -6,7 +6,8 @@ import { authFirebase } from "./auth-firebase";
 import { upload } from "./upload";
 import { registerDb } from "./register-db";
 import { download } from "./download";
-import { generateJson } from "./generate-json";
+import { generateImportmapJson } from "./generate-importmap-json";
+import { generateFirebaseJson } from "./generate-firebase-json";
 
 async function run() {
   const {
@@ -31,38 +32,47 @@ async function run() {
     return error("Faltam parâmetros");
   }
 
-  // -----
-  // auth
-  authFirebase(firebaseAuth);
-  console.info("---");
+  try {
+    // -----
+    // auth
+    authFirebase(firebaseAuth);
+    console.info("---");
 
-  // -----
-  // upload mfe bundle to store
-  const destinationFolder = path.parse(fileName).name;
-  await upload(folderAddress, destinationFolder);
-  console.info("---");
+    // -----
+    // upload mfe bundle to store
+    const destinationFolder = path.parse(fileName).name;
+    await upload(folderAddress, destinationFolder);
+    console.info("---");
 
-  // -----
-  // register mfe on db
-  await registerDb({
-    mfeName,
-    activeWhen,
-    destinationFolder,
-    exact,
-    fileName,
-    isParcel,
-  });
-  console.info("---");
+    // -----
+    // register mfe on db
+    await registerDb({
+      mfeName,
+      activeWhen,
+      destinationFolder,
+      exact,
+      fileName,
+      isParcel,
+    });
+    console.info("---");
 
-  // -----
-  // download all bundles from store
-  await download();
-  console.info("---");
+    // -----
+    // download all bundles from store
+    await download();
+    console.info("---");
 
-  // -----
-  // get db data and generate import map json files
-  await generateJson();
-  console.info("---\nlib-publish-mfe sucess finished");
+    // -----
+    // get db data and generate import map json files
+    await generateImportmapJson();
+    console.info("---");
+
+    // -----
+    // generate firebase.json
+    await generateFirebaseJson();
+    console.info("---\nlib-publish-mfe sucess finished");
+  } catch (errorRun) {
+    error(errorRun);
+  }
 }
 
 run();
