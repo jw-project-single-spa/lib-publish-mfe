@@ -14,6 +14,7 @@ async function run() {
     activeWhen,
     exact,
     isParcel,
+    isStructural,
     fileName,
     folderAddress,
     mfeName,
@@ -22,6 +23,7 @@ async function run() {
     activeWhen: { type: "string", default: "/" },
     exact: { type: "boolean", default: false },
     isParcel: { type: "boolean", default: false },
+    isStructural: { type: "boolean", default: false },
     fileName: { type: "string" },
     folderAddress: { type: "string", default: "dist" },
     mfeName: { type: "string" },
@@ -53,6 +55,7 @@ async function run() {
       exact,
       fileName,
       isParcel,
+      isStructural,
     });
     console.info("---");
 

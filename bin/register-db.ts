@@ -8,6 +8,7 @@ export async function registerDb({
   activeWhen,
   exact,
   isParcel,
+  isStructural,
 }: MfePayload) {
   const db = firestore().collection("mfes");
 
@@ -19,6 +20,7 @@ export async function registerDb({
     activeWhen,
     exact,
     isParcel,
+    isStructural,
     hash: new Date().getTime(),
   };
   let save: firestore.WriteResult;

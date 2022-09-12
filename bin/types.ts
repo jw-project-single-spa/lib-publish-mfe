@@ -5,6 +5,7 @@ export type MfePayload = {
   activeWhen: string;
   exact: boolean;
   isParcel: boolean;
+  isStructural: boolean;
 };
 
 export type MfeResponse = {
@@ -13,5 +14,6 @@ export type MfeResponse = {
   activeWhen: string;
   exact: boolean;
   isParcel: boolean;
+  isStructural: boolean;
   hash: number;
 };
